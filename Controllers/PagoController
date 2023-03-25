@@ -1,13 +1,14 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AppFormularioDePago.Models;
+
 namespace AppFormularioDePago.Controllers;
 
-public class HomeController : Controller
+public class PagoController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<PagoController> _logger;
 
-    public HomeController(ILogger<HomeController> logger)
+    public PagoController(ILogger<PagoController> logger)
     {
         _logger = logger;
     }
@@ -18,11 +19,16 @@ public class HomeController : Controller
     }
     public IActionResult Pago(string numeroTarjeta, DateTime fechaVencimiento,string monto)
     {
-        //pagoModel _pago = new pagoModel();
-
-        return View();
+        PagoModel _pago = new PagoModel();
+        DateTime hoy = DateTime.Now;
+        TimeSpan diferencia = hoy.Subtract(fechaVencimiento);
+        int diasDeDiferencia = diferencia.Days;
+        decimal montoFinal = decimal.Parse((monto)+(diasDeDiferencia*(0.005/100)));
+        _pago.NumeroTarjeta = numeroTarjeta;
+        _pago.FechaVencimiento = fechaVencimiento;
+        _pago.Monto = montoFinal;
+        return View("PagoTotal", _pago);
     }
-
     public IActionResult Privacy()
     {
         return View();
@@ -33,5 +39,4 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-
 }
