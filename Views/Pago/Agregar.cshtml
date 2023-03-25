@@ -1,3 +1,5 @@
+@model AppFormularioDePago.Models.PagoModel
+
 @{
     ViewData["Title"] = "Pago Index";
 }
@@ -14,15 +16,15 @@
       </div>
       <form asp-controller="Pago" asp-action="Agregar" method="post" class="p-4 p-md-5 border rounded-3 bg-light">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="numeroTarjeta" placeholder="Nombres">
+          <input type="text" class="form-control" asp-for="NumeroTarjeta" placeholder="Nombres">
           <label for="floatingInput">Número de Tarjeta</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="date" class="form-control" id="fechaVencimiento" placeholder="Apellidos">
+          <input type="date" class="form-control" asp-for="FechaVencimiento" placeholder="Apellidos">
           <label for="floatingInput">Fecha de Vencimiento de pago</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="monto" step="0.01" min="0.00" max="1000.00" placeholder="Nombres">
+          <input type="number" class="form-control" asp-for="Monto" step="0.01" min="0.00" placeholder="Nombres">
           <label for="floatingInput">Monto a pagar (S/.)</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Pagar</button>

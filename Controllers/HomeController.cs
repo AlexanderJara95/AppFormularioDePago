@@ -16,13 +16,6 @@ public class HomeController : Controller
     {
         return View();
     }
-    public IActionResult Pago(string numeroTarjeta, DateTime fechaVencimiento,string monto)
-    {
-        //pagoModel _pago = new pagoModel();
-
-        return View();
-    }
-
     public IActionResult Privacy()
     {
         return View();

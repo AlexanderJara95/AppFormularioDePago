@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using AppFormularioDePago.Models;
-
 namespace AppFormularioDePago.Controllers;
 
 public class PagoController : Controller
@@ -17,17 +16,25 @@ public class PagoController : Controller
     {
         return View();
     }
-    public IActionResult Pago(string numeroTarjeta, DateTime fechaVencimiento,string monto)
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Pagar(string numeroTarjeta, DateTime fechaVencimiento,string monto)
     {
         PagoModel _pago = new PagoModel();
         DateTime hoy = DateTime.Now;
         TimeSpan diferencia = hoy.Subtract(fechaVencimiento);
         int diasDeDiferencia = diferencia.Days;
-        decimal montoFinal = decimal.Parse((monto)+(diasDeDiferencia*(0.005/100)));
+        double montoDecimal = double.Parse(monto);
+        double montoFinal = montoDecimal + montoDecimal*diasDeDiferencia*(100/0.005);
         _pago.NumeroTarjeta = numeroTarjeta;
         _pago.FechaVencimiento = fechaVencimiento;
         _pago.Monto = montoFinal;
-        return View("PagoTotal", _pago);
+        return View(_pago);
     }
     public IActionResult Privacy()
     {
@@ -39,4 +46,5 @@ public class PagoController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
 }
